@@ -135,7 +135,7 @@ img { max-width: 100%; }
 .clear-filters { border: 1px solid #dfbed0; background: #fff; padding: 10px; border-radius: 5px; color: var(--primary); width: 100%; font-size: 13px; font-weight: 700; }
 .catalog-result-heading { display: flex; gap: 12px; flex-wrap: wrap; align-items: baseline; margin-bottom: 20px; font-size: 14px; }
 .catalog-result-heading span { font-weight: 400; color: #888; }
-.catalog-results .product-grid { grid-template-columns: repeat(3,minmax(0,1fr)); }
+.catalog-results .product-grid { grid-template-columns: repeat(3,minmax(0,1fr)); column-gap: 18px; }
 .catalog-results .product-image { height: 321px; }
 .catalog-results .shop-section { margin-top: 0; }
 .catalog-query { color: #666; font-size: 14px; margin: 0 0 12px; }
