@@ -1,5 +1,7 @@
 # Digital Store
 
+**Acesse a aplicação:** [Testar Digital Store](https://digital-store-frontend-iota.vercel.app)
+
 Projeto final de Front-end da Digital College: uma loja virtual demonstrativa de calçados, roupas e acessórios. O catálogo é local e a aplicação não inclui backend, banco de dados, login real ou pagamentos.
 
 ## Integrante
