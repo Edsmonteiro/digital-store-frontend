@@ -24,7 +24,7 @@ Projeto final de Front-end da Digital College: uma loja virtual demonstrativa de
 
 ## Capturas de tela
 
-Capturas reais em desktop (1440px), geradas durante os testes de navegador:
+Capturas reais das páginas publicadas, em desktop (1440px):
 
 **Home**
 
@@ -71,19 +71,37 @@ tests/         testes do catálogo
 
 ## Referências
 
+- **Aplicação publicada:** [Digital Store na Vercel](https://digital-store-frontend-iota.vercel.app)
 - [Documentação oficial da Digital College](https://github.com/digitalcollegebr/projeto-digital-store)
 - [Arquivo de design no Figma](https://www.figma.com/design/nUk0ihM3x4u8JQtxUoAEJf/DRIP-STORE---DIGITAL-COLLEGE--Copy-?node-id=22-30&p=f)
 - [Protótipo no Figma](https://www.figma.com/proto/nUk0ihM3x4u8JQtxUoAEJf/DRIP-STORE---DIGITAL-COLLEGE--Copy-?node-id=22-30)
-- Demonstração: ainda não publicada.
+
+## Auditoria visual pelas referências oficiais
+
+A comparação com os wireframes de `doc/layout` e as capturas atuais confirmou a estrutura das três páginas: header e footer compartilhados; Home com banner, três coleções e oito produtos; listagem com filtros e cartões; produto com galeria, opções, compra demonstrativa e recomendações.
+
+Medidas verificadas na produção e alinhadas às especificações da Digital College:
+
+- Logo: 253 × 44 px; banner da Home: 1440 × 681 px.
+- Cartões de produto: 292 × 321 px; Home com oito produtos.
+- Ordenação e sidebar da listagem: 308 px de largura; ordenação com 60 px de altura.
+- Galeria do produto: 700 × 570 px; miniaturas: 117 × 95 px.
+- Links de seção: 18 px; link “Cadastre-se”: 16 px; botão “Entrar”: 114 × 40 px, raio de 4 px.
+
+Foram corrigidos os tamanhos do link de cadastro, do botão de entrada e dos links de seção, além dos gaps da grade para alcançar as dimensões dos cartões e da galeria. As medidas foram conferidas com Playwright na URL publicada.
+
+**Pendente:** o arquivo visual do Figma não pôde ser inspecionado diretamente nesta sessão porque a política de URL bloqueou o navegador local. Os arquivos oficiais `doc/layout` são wireframes estruturais; eles não fornecem métricas completas de tipografia, espaçamento, alinhamento fino ou estados responsivos do Figma. Esses pontos ainda precisam de comparação direta com os frames do Figma, então não afirmo fidelidade pixel a pixel.
 
 ## Limitações conhecidas
 
 - O catálogo é estático e as imagens oficiais são servidas pelo repositório público da Digital College; a exibição delas depende de conexão com a internet.
 - Conta, pedidos e compra são demonstrações locais. Não há backend, banco de dados, autenticação ou pagamento real.
-- O Figma permite visualizar os quadros, mas não expõe as camadas e medidas ao leitor de tela sem uma sessão autenticada. A comparação visual cobre as telas e proporções visíveis; a inspeção detalhada de espaçamentos e estilos internos permanece pendente.
+- A auditoria foi feita contra as referências estruturais do repositório oficial. A comparação detalhada de espaçamentos, tipografia, alinhamentos e recortes com os frames do Figma permanece pendente.
 
 ## Testes de navegador
 
 `npm run test:e2e` usa Playwright com o Microsoft Edge instalado na máquina. Os testes cobrem as rotas principais, pesquisa e filtros, navegação da galeria, seleção das opções, carrinho demonstrativo, carregamento das imagens, console e rolagem horizontal nos breakpoints de 1440, 1366, 1024, 768, 390 e 375 pixels.
+
+As rotas `/`, `/products` e `/product/1` também foram abertas diretamente na produção; todas responderam e renderizaram seus conteúdos sem erros de console nem rolagem horizontal em 1440 px.
 
 **Prazo acadêmico:** 20/11/2026.
