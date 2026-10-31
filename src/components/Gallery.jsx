@@ -7,7 +7,10 @@ export default function Gallery({images, showThumbs = false, width, height, radi
   const previous = () => setSelected((index) => Math.max(0,index-1));
   const next = () => setSelected((index) => Math.min(images.length-1,index+1));
   return <div className={`gallery ${showThumbs ? 'gallery-product' : 'gallery-banner'} ${className}`} style={{'--gallery-width': width ? `${width}px` : '100%', '--gallery-height': height ? `${height}px` : 'auto', '--gallery-radius': radius}}>
-    <div className="gallery-stage"><img src={images[selected].src} alt={`${alt}, imagem ${selected + 1} de ${images.length}`} />
+    <div className="gallery-stage">
+      <div className="gallery-track" style={{transform: `translateX(-${selected * 100}%)`}}>
+        {images.map((image, index) => <img key={`${image.src}-${index}`} src={image.src} alt={`${alt}, imagem ${index + 1} de ${images.length}`} loading={index === 0 ? 'eager' : 'lazy'} />)}
+      </div>
       <button type="button" className="gallery-prev" onClick={previous} disabled={selected === 0} aria-label="Imagem anterior"><ChevronLeft /></button>
       <button type="button" className="gallery-next" onClick={next} disabled={selected === images.length - 1} aria-label="Próxima imagem"><ChevronRight /></button>
     </div>

@@ -49,7 +49,7 @@ img { max-width: 100%; }
 .hero { position: relative; background: #eae8f9; overflow: hidden; }
 .hero .gallery { max-width: none; width: 100%; }
 .hero .gallery-stage { height: 681px; max-height: none; border-radius: 0; background: linear-gradient(105deg,#f4f1fa,#e7e8fc); }
-.hero .gallery-stage > img { width: 100%; height: 100%; object-fit: cover; opacity: .50; object-position: center; }
+.hero .gallery-track > img { width: 100%; height: 100%; object-fit: cover; opacity: .50; object-position: center; }
 .hero .gallery-stage::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg,rgba(247,244,252,.98) 0%,rgba(247,244,252,.93) 37%,transparent 80%); pointer-events: none; }
 .hero .gallery-prev,.hero .gallery-next { z-index: 2; }
 .hero .gallery-dots { position: absolute; bottom: 18px; left: 50%; transform: translateX(-50%); z-index: 4; }
@@ -100,7 +100,10 @@ img { max-width: 100%; }
 /* Galeria */
 .gallery { width: 100%; max-width: var(--gallery-width); }
 .gallery-stage { height: var(--gallery-height); position: relative; overflow: hidden; border-radius: var(--gallery-radius); background: #f0eef3; }
-.gallery-stage > img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.gallery-track { display: flex; width: 100%; height: 100%; transition: transform 350ms ease; }
+.gallery-track > img { flex: 0 0 100%; min-width: 0; }
+@media (prefers-reduced-motion: reduce) { .gallery-track { transition: none; } }
+.gallery-track > img { width: 100%; height: 100%; object-fit: contain; display: block; }
 .gallery-stage > button { position: absolute; top: 50%; transform: translateY(-50%); border: 0; border-radius: 50%; width: 40px; height: 40px; display: grid; place-items: center; background: rgba(255,255,255,.95); color: #464646; box-shadow: 0 3px 15px #00000014; }
 .gallery-stage > button:disabled { opacity: .3; cursor: not-allowed; }
 .gallery-prev { left: 15px; }
@@ -247,7 +250,7 @@ img { max-width: 100%; }
   .main-nav a { padding: 12px 0; }
   .hero .gallery-stage { height: 485px; }
   .hero .gallery-stage:after { background: rgba(247,244,252,.72); }
-  .hero .gallery-stage > img { object-position: center; opacity: .55; }
+  .hero .gallery-track > img { object-position: center; opacity: .55; }
   .hero h1 { font-size: 43px; }
   .hero-content { top: -20px; }
   .hero-content > * { max-width: 335px; }
