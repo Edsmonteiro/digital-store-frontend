@@ -6,7 +6,7 @@ Projeto final de Front-end da Digital College: uma loja virtual demonstrativa de
 
 ## Integrante
 
-- **Edson Monteiro** — proprietário da conta GitHub [@Edsmonteiro](https://github.com/Edsmonteiro)
+- **Edson Monteiro** 
 
 ## Tecnologias
 
