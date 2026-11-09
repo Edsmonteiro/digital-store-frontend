@@ -11,8 +11,8 @@ export default function CartDrawer() {
       {items.length ? <div className="cart-items">{items.map(item=><div className="cart-item" key={`${item.productId}-${item.size}-${item.color}`}>
         <img src={item.image} alt="" /><div><strong>{item.name}</strong><small>Tam. {item.size} · Qtd. {item.quantity}</small><span>{money(item.price * item.quantity)}</span></div>
         <button aria-label={`Remover ${item.name}`} onClick={()=>remove(item.productId,item.size,item.color)}><Trash2 size={17}/></button>
-      </div>)}</div> : <div className="empty-cart"><ShoppingBag size={44}/><p>Seu carrinho está vazio.</p><Link to="/products" onClick={()=>setOpen(false)}>Explorar produtos</Link></div>}
-      <div className="drawer-footer">{message && <p className="cart-message" role="status">{message}</p>}{items.length > 0 && <><div className="cart-total"><span>Total</span><strong>{money(total)}</strong></div><button className="buy-button" disabled={busy} onClick={checkout}>{busy?'Registrando...':'Finalizar pedido de teste'}</button></>}</div>
+      </div>)}</div> : <div className="empty-cart"><ShoppingBag size={44}/><p>Seu carrinho está vazio.</p><Link to="/products" onClick={()=>setOpen(false)}>Ver produtos</Link></div>}
+      <div className="drawer-footer">{message && <p className="cart-message" role="status">{message}</p>}{items.length > 0 && <><div className="cart-total"><span>Total</span><strong>{money(total)}</strong></div><button className="buy-button" disabled={busy} onClick={checkout}>{busy?'Registrando...':'Salvar pedido de teste'}</button></>}</div>
     </aside>
   </div>;
 }
