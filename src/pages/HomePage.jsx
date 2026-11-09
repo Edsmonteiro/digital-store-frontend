@@ -13,7 +13,7 @@ export default function HomePage() {
   const collections = getCollections();
   return <>
     <div className="hero"><Gallery images={slides} width={1440} height={681} alt="Coleção em destaque" />
-      <div className="container hero-content"><p className="hero-eyebrow">A coleção que combina com você</p><h1>Seu estilo começa <span>aqui.</span></h1><p>Descubra peças para cada passo do seu dia. Conforto, atitude e boas escolhas em um só lugar.</p><Link to="/products" className="primary-button">Ver produtos <ArrowRight size={18}/></Link></div>
+      <div className="container hero-content"><p className="hero-eyebrow">Na Digital Store</p><h1>Tênis, roupas e <span>acessórios.</span></h1><p>Tem modelos casuais, peças básicas e ofertas no catálogo. Dá uma olhada e escolha o que gostar.</p><Link to="/products" className="primary-button">Ver produtos <ArrowRight size={18}/></Link></div>
     </div>
     <div className="container home-content">
       <Section title="Coleções em destaque" titleAlign="center" className="collections-section">
