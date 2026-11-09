@@ -32,7 +32,7 @@ export default function Header() {
     { to: '/', label: 'Home', end: true },
     { to: '/products', label: 'Produtos' },
     { to: '/products?category=Calçados', label: 'Categorias' },
-    { to: '/orders', label: 'Meus pedidos' }
+    { to: '/orders', label: 'Meus Pedidos' }
   ];
   function submit(event) {
     event.preventDefault();
@@ -60,11 +60,12 @@ export default function Header() {
     {mobileMenu && <button type="button" className="menu-backdrop" aria-label="Fechar menu pelo fundo" onClick={() => setMobileMenu(false)} />}
     <nav id="main-navigation" className={`main-nav container ${mobileMenu ? 'is-open' : ''}`} aria-label="Navegação principal">
       <button type="button" className="menu-close" aria-label="Fechar menu" onClick={() => setMobileMenu(false)}><X /></button>
+      <strong className="mobile-menu-title">Páginas</strong>
       {links.map(({to,label,end}) => <NavLink key={label} to={to} end={end} onClick={() => setMobileMenu(false)} className={({isActive}) => {
         const active = label === 'Categorias'
           ? isActive && location.search.includes('category=')
           : label === 'Produtos'
-            ? isActive && !location.search.includes('category=')
+            ? location.pathname.startsWith('/product/') || (isActive && !params.has('category'))
             : isActive;
         return active ? 'active' : undefined;
       }}>{label}</NavLink>)}

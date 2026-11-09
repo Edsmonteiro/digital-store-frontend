@@ -13,9 +13,9 @@ test('busca filtra o catálogo sem diferenciar maiúsculas', () => {
 });
 
 test('filtros de categoria e marca combinam', () => {
-  const items = getProducts({ category: 'Calçados', brand: 'Puma' });
+  const items = getProducts({ category: 'Calçados', brand: 'Converse' });
   assert.ok(items.length > 0);
-  assert.ok(items.every((p) => p.category === 'Calçados' && p.brand === 'Puma'));
+  assert.ok(items.every((p) => p.category === 'Calçados' && p.brand === 'Converse'));
 });
 
 test('ordenação considera preços com desconto', () => {
@@ -36,7 +36,7 @@ test('a home possui 3 coleções', () => {
 test('fotos do catálogo pertencem exclusivamente à galeria do item', () => {
   const assigned = new Set();
   for (const product of getProducts()) {
-    assert.deepEqual(product.images, product.image ? [product.image] : []);
+    assert.deepEqual(product.images, [product.image]);
     for (const image of product.images) {
       assert.ok(!assigned.has(image), image);
       assigned.add(image);

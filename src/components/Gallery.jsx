@@ -13,6 +13,6 @@ export default function Gallery({images, showThumbs = false, width, height, radi
       <button type="button" className="gallery-prev" onClick={previous} disabled={selected === 0} aria-label="Imagem anterior"><img src="/store/arrow-left.svg" alt="" /></button>
       <button type="button" className="gallery-next" onClick={next} disabled={selected === images.length - 1} aria-label="Próxima imagem"><img src="/store/arrow-right.svg" alt="" /></button>
     </div>
-    {showThumbs && images.length > 1 ? <div className="gallery-thumbs">{images.map((img,index) => <button type="button" key={`${img.src}-${index}`} className={selected === index ? 'selected' : ''} onClick={() => setSelected(index)} aria-label={`Mostrar imagem ${index+1}`}><img src={img.src} alt="" /></button>)}</div> : !showThumbs && <div className="gallery-dots">{images.map((_,index) => <button key={index} className={selected===index?'selected':''} onClick={()=>setSelected(index)} aria-label={`Ir para slide ${index + 1}`}/>)}</div>}
+    {showThumbs ? <div className="gallery-thumbs">{images.map((img,index) => <button type="button" key={`${img.src}-${index}`} className={selected === index ? 'selected' : ''} onClick={() => setSelected(index)} aria-pressed={selected === index} aria-label={`Mostrar imagem ${index+1}`}><img src={img.src} alt="" /></button>)}</div> : !showThumbs && <div className="gallery-dots">{images.map((_,index) => <button key={index} className={selected===index?'selected':''} onClick={()=>setSelected(index)} aria-label={`Ir para slide ${index + 1}`}/>)}</div>}
   </div>;
 }

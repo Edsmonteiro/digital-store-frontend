@@ -34,12 +34,11 @@ export default function ProductListingPage() {
     setParams(next);
   }
   return <div className="container catalog-page">
-    <div className="page-heading"><p>Home / Produtos</p><h1>Todos os produtos</h1><span>Use a busca ou os filtros para encontrar o que procura.</span></div>
-    <div className="catalog-toolbar"><button className="mobile-filter-toggle" aria-expanded={showFilters} aria-controls="catalog-filters" onClick={()=>setShowFilters(!showFilters)}><SlidersHorizontal size={19}/> Filtrar produtos</button></div>
+    <div className="catalog-toolbar"><h1>Resultados para {params.get('filter') || 'Produtos'}</h1><label className="sort-control"><span>Ordenar por</span><select value={params.get('sort')||''} onChange={e=>change('sort',e.target.value)}><option value="">Destaques</option><option value="price-asc">Menor preço</option><option value="price-desc">Maior preço</option></select></label><button className="mobile-filter-toggle" aria-label="Filtrar produtos" aria-expanded={showFilters} aria-controls="catalog-filters" onClick={()=>setShowFilters(!showFilters)}><SlidersHorizontal size={19}/></button></div>
     {showFilters && <button type="button" className="filter-backdrop" aria-label="Fechar filtros pelo fundo" onClick={() => setShowFilters(false)} />}
     <div className="catalog-layout">
       <aside className={`catalog-sidebar ${showFilters?'visible':''}`}>
-        <label className="sort-control"><span>Ordenar por</span><select value={params.get('sort')||''} onChange={e=>change('sort',e.target.value)}><option value="">Destaques</option><option value="price-asc">Menor preço</option><option value="price-desc">Maior preço</option></select></label>
+
         <div id="catalog-filters" className={`filters-panel ${showFilters?'visible':''}`}><div className="filter-top"><h2>Filtrar por</h2><button className="mobile-filter-close" aria-label="Fechar filtros" onClick={()=>setShowFilters(false)}><X/></button></div>
         <FilterGroup title="Categoria" options={categoryOptions} value={params.get('category')||''} onChange={v=>change('category',v)} />
         <FilterGroup title="Marca" options={brandOptions} value={params.get('brand')||''} onChange={v=>change('brand',v)} />

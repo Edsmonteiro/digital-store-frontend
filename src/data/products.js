@@ -1,35 +1,35 @@
 const cdn = '/store/';
 
 export const collections = [
-  { title: 'Estilo que acompanha', tag: 'Camisetas', image: `${cdn}collection-1.png`, category: 'Roupas' },
-  { title: 'O detalhe faz diferença', tag: 'Calçados', image: `${cdn}collection-2.png`, category: 'Calçados' },
-  { title: 'Para todos os dias', tag: 'Acessórios', image: `${cdn}collection-3.png`, category: 'Acessórios' }
+  { title: 'Novo drop Supreme', tag: 'Camisetas', image: `${cdn}collection-1.png`, category: 'Roupas' },
+  { title: 'Coleção Adidas', tag: 'Calçados', image: `${cdn}collection-2.png`, category: 'Calçados' },
+  { title: 'Novo Beats Bass', tag: 'Acessórios', image: `${cdn}collection-3.png`, category: 'Acessórios' }
 ];
 
 const data = [
-  ['Tênis Street Move', 'Calçados', 'Nike', 'Unissex', 299.90, 219.90, 'product-thumb-1.jpeg'],
-  ['Tênis Court Classic', 'Calçados', 'Adidas', 'Masculino', 349.90, 289.90, null],
-  ['Tênis Urban Runner', 'Calçados', 'Puma', 'Feminino', 399.90, 319.90, null],
-  ['Tênis Casual Canvas', 'Calçados', 'Converse', 'Unissex', 259.90, null, 'produc-image-4.jpeg'],
-  ['Tênis Daily Comfort', 'Calçados', 'Vans', 'Masculino', 329.90, 269.90, null],
-  ['Camiseta Essential', 'Roupas', 'Nike', 'Feminino', 119.90, 89.90, null],
-  ['Camiseta Sport Line', 'Roupas', 'Adidas', 'Masculino', 139.90, null, null],
-  ['Jaqueta Urban', 'Roupas', 'Puma', 'Unissex', 289.90, 229.90, null],
-  ['Bolsa Everyday', 'Acessórios', 'Vans', 'Feminino', 189.90, 149.90, null],
-  ['Boné Street', 'Acessórios', 'Converse', 'Unissex', 99.90, 79.90, null]
+  ["Tênis Street Move","Calçados","Nike","Unissex",299.9,219.9,"product-thumb-1.jpeg"],
+  ["Tênis de cano alto vermelho","Calçados","Nike","Unissex",349.9,289.9,"product-thumb-2.jpeg"],
+  ["Tênis casual marrom","Calçados","","Unissex",399.9,319.9,"product-thumb-3.jpeg"],
+  ["Tênis Casual Canvas","Calçados","Converse","Unissex",259.9,null,"produc-image-4.jpeg"],
+  ["Tênis esportivo verde-limão","Calçados","Nike","Unissex",329.9,269.9,"product-thumb-5.jpeg"],
+  ["Tênis de cano alto verde","Calçados","Nike","Unissex",319.9,249.9,"produc-image-1.jpeg"],
+  ["Tênis casual bege e branco","Calçados","","Unissex",239.9,null,"produc-image-2.jpeg"],
+  ["Tênis de cano alto salmão","Calçados","Nike","Unissex",289.9,229.9,"produc-image-3.jpeg"],
+  ["Tênis esportivo azul-petróleo","Calçados","","Unissex",189.9,149.9,"product-thumb-4.jpeg"],
+  ["Tênis esportivo branco e laranja","Calçados","Nike","Unissex",299.9,249.9,"produc-image-5.jpeg"]
 ];
 
 const descriptions = [
-  'Tênis casual para usar com jeans, bermuda ou calça. Uma opção para quem prefere um visual mais básico.',
-  'Modelo com inspiração nos tênis de quadra, para combinar com roupas casuais.',
-  'Tênis com visual esportivo, que também funciona com looks do dia a dia.',
-  'Uma opção simples para quem gosta de tênis de lona e combinações mais descontraídas.',
-  'Tênis casual de linhas discretas, fácil de combinar com peças básicas.',
-  'Camiseta para quem gosta de roupas simples e de montar o próprio conjunto.',
-  'Camiseta de visual esportivo, para usar com short, calça ou bermuda.',
-  'Jaqueta para completar uma produção casual nos dias mais frescos.',
-  'Bolsa para levar os itens do dia a dia, sem abrir mão de um visual mais casual.',
-  'Boné para usar com camiseta, jaqueta ou o que mais combinar com você.'
+  "Tênis de cano alto branco, preto e vermelho.",
+  "Tênis vermelho e branco com detalhe lateral preto.",
+  "Tênis marrom de cadarço com solado branco.",
+  "Tênis bege de lona com cano alto.",
+  "Tênis esportivo verde-limão com detalhe lateral preto.",
+  "Tênis de cano alto verde e branco.",
+  "Tênis de cano baixo com cabedal bege e branco.",
+  "Tênis de cano alto com painéis salmão, bege e branco.",
+  "Tênis azul-petróleo com painéis bege e branco.",
+  "Tênis esportivo branco com detalhes laranja."
 ];
 
 export const products = data.map(([name, category, brand, gender, price, priceDiscount, image], index) => ({
@@ -40,8 +40,8 @@ export const products = data.map(([name, category, brand, gender, price, priceDi
   gender,
   price,
   priceDiscount,
-  image: image ? `${cdn}${image}` : null,
-  images: image ? [`${cdn}${image}`] : [],
+  image: `${cdn}${image}`,
+  images: [`${cdn}${image}`],
   reference: `DS-${String(index + 1).padStart(4, '0')}`,
   stars: Number((4.2 + (index % 6) * .1).toFixed(1)),
   rating: 42 + index * 11,

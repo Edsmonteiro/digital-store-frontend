@@ -4,7 +4,7 @@ const screenshotPath = (name) => `docs/screenshots/${name}.png`;
 
 test('home mostra carrossel, três coleções e oito produtos', async ({ page }) => {
   await page.goto('/');
-  await expect(page.getByRole('heading', { name: 'Coleções em destaque' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Coleções em destaque' })).toHaveCount(2);
   await expect(page.getByRole('heading', { name: 'Produtos em alta' })).toBeVisible();
   await expect(page.locator('.collection-card')).toHaveCount(3);
   await expect(page.locator('.home-content .product-card')).toHaveCount(8);
@@ -35,7 +35,7 @@ test('galeria, seleção de opções e compra demonstrativa funcionam', async ({
   await expect(images.first()).toHaveAttribute('src', '/store/product-thumb-1.jpeg');
   await expect(page.getByRole('button', { name: 'Imagem anterior' })).toBeDisabled();
   await expect(page.getByRole('button', { name: 'Próxima imagem' })).toBeDisabled();
-  await expect(page.locator('.gallery-thumbs')).toHaveCount(0);
+  await expect(page.getByRole('button', { name: 'Mostrar imagem 1' })).toHaveAttribute('aria-pressed', 'true');
   await page.getByRole('button', { name: 'Selecionar tamanho 40' }).click();
   await page.getByRole('button', { name: 'Selecionar cor #dad2c8' }).click();
   await expect(page.getByRole('button', { name: 'Selecionar tamanho 40' })).toHaveAttribute('aria-pressed', 'true');
@@ -86,6 +86,7 @@ test('menu, busca e filtros mobile', async ({ page }) => {
   await page.keyboard.press('Escape');
   await expect(page.locator('.main-nav')).toBeHidden();
   await page.getByRole('button', { name: 'Alternar busca' }).click();
+  await page.screenshot({ path: 'test-results/visual/375/busca.png' });
   await page.getByLabel('Buscar produtos').fill('street');
   await page.getByRole('button', { name: 'Pesquisar', exact: true }).click();
   await expect(page).toHaveURL(/filter=street/);
@@ -104,7 +105,7 @@ test('o carrossel da Home navega e desabilita as setas nas extremidades', async 
   await expect(previous).toBeDisabled();
   await next.click();
   await expect(gallery.locator('.gallery-track')).toHaveAttribute('style', /translateX\(-100%\)/);
-  await gallery.getByRole('button', { name: 'Ir para slide 3' }).click();
+  await gallery.getByRole('button', { name: 'Ir para slide 4' }).click();
   await expect(next).toBeDisabled();
   await previous.click();
   await expect(next).toBeEnabled();
