@@ -39,7 +39,7 @@ test('galeria, seleção de opções e compra demonstrativa funcionam', async ({
   const firstImage = await images.first().getAttribute('src');
   expect(firstImage).toBeTruthy();
   await expect(images.nth(1)).not.toHaveAttribute('src', firstImage);
-  await expect(track).toHaveAttribute('style', /translateX\(-0%\)/);
+  await expect(track).toHaveAttribute('style', /translateX\(-?0%\)/);
   await expect(page.getByRole('button', { name: 'Imagem anterior' })).toBeDisabled();
 
   await page.getByRole('button', { name: 'Próxima imagem' }).click();
@@ -51,7 +51,7 @@ test('galeria, seleção de opções e compra demonstrativa funcionam', async ({
   await page.getByRole('button', { name: 'Imagem anterior' }).click();
   await expect(track).toHaveAttribute('style', /translateX\(-100%\)/);
   await page.getByRole('button', { name: 'Mostrar imagem 1' }).click();
-  await expect(track).toHaveAttribute('style', /translateX\(-0%\)/);
+  await expect(track).toHaveAttribute('style', /translateX\(-?0%\)/);
   await expect(page.getByRole('button', { name: 'Mostrar imagem 1' })).toHaveClass(/selected/);
   await page.getByRole('button', { name: 'Selecionar tamanho 40' }).click();
   await page.getByRole('button', { name: 'Selecionar cor #dad2c8' }).click();
