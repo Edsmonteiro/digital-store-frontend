@@ -32,16 +32,27 @@ test('pesquisa pela query string e filtros preservam a navegação', async ({ pa
 
 test('galeria, seleção de opções e compra demonstrativa funcionam', async ({ page }) => {
   await page.goto('/product/1');
-  const featuredImage = page.locator('.gallery-stage img');
-  const firstImage = await featuredImage.getAttribute('src');
+  // A galeria mantém todas as imagens na trilha e desliza via transform.
+  const track = page.locator('.gallery-product .gallery-track');
+  const images = track.locator('img');
+  await expect(images).toHaveCount(3);
+  const firstImage = await images.first().getAttribute('src');
+  expect(firstImage).toBeTruthy();
+  await expect(images.nth(1)).not.toHaveAttribute('src', firstImage);
+  await expect(track).toHaveAttribute('style', /translateX\(-?0%\)/);
   await expect(page.getByRole('button', { name: 'Imagem anterior' })).toBeDisabled();
+
   await page.getByRole('button', { name: 'Próxima imagem' }).click();
-  await expect(featuredImage).not.toHaveAttribute('src', firstImage);
+  await expect(track).toHaveAttribute('style', /translateX\(-100%\)/);
   await page.getByRole('button', { name: 'Próxima imagem' }).click();
+  await expect(track).toHaveAttribute('style', /translateX\(-200%\)/);
   await expect(page.getByRole('button', { name: 'Próxima imagem' })).toBeDisabled();
+
   await page.getByRole('button', { name: 'Imagem anterior' }).click();
+  await expect(track).toHaveAttribute('style', /translateX\(-100%\)/);
   await page.getByRole('button', { name: 'Mostrar imagem 1' }).click();
-  await expect(featuredImage).toHaveAttribute('src', firstImage);
+  await expect(track).toHaveAttribute('style', /translateX\(-?0%\)/);
+  await expect(page.getByRole('button', { name: 'Mostrar imagem 1' })).toHaveClass(/selected/);
   await page.getByRole('button', { name: 'Selecionar tamanho 40' }).click();
   await page.getByRole('button', { name: 'Selecionar cor #dad2c8' }).click();
   await expect(page.getByRole('button', { name: 'Selecionar tamanho 40' })).toHaveAttribute('aria-pressed', 'true');
