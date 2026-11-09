@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
 export default function Gallery({images, showThumbs = false, width, height, radius = '4px', alt = 'Produto', className = ''}) {
   const [selected,setSelected] = useState(0);
   useEffect(() => setSelected(0), [images?.[0]?.src]);
@@ -11,9 +10,9 @@ export default function Gallery({images, showThumbs = false, width, height, radi
       <div className="gallery-track" style={{transform: `translateX(-${selected * 100}%)`}}>
         {images.map((image, index) => <img key={`${image.src}-${index}`} src={image.src} alt={`${alt}, imagem ${index + 1} de ${images.length}`} loading={index === 0 ? 'eager' : 'lazy'} />)}
       </div>
-      <button type="button" className="gallery-prev" onClick={previous} disabled={selected === 0} aria-label="Imagem anterior"><ChevronLeft /></button>
-      <button type="button" className="gallery-next" onClick={next} disabled={selected === images.length - 1} aria-label="Próxima imagem"><ChevronRight /></button>
+      <button type="button" className="gallery-prev" onClick={previous} disabled={selected === 0} aria-label="Imagem anterior"><img src="/store/arrow-left.svg" alt="" /></button>
+      <button type="button" className="gallery-next" onClick={next} disabled={selected === images.length - 1} aria-label="Próxima imagem"><img src="/store/arrow-right.svg" alt="" /></button>
     </div>
-    {showThumbs ? <div className="gallery-thumbs">{images.map((img,index) => <button type="button" key={`${img.src}-${index}`} className={selected === index ? 'selected' : ''} onClick={() => setSelected(index)} aria-label={`Mostrar imagem ${index+1}`}><img src={img.src} alt="" /></button>)}</div> : <div className="gallery-dots">{images.map((_,index) => <button key={index} className={selected===index?'selected':''} onClick={()=>setSelected(index)} aria-label={`Ir para slide ${index + 1}`}/>)}</div>}
+    {showThumbs && images.length > 1 ? <div className="gallery-thumbs">{images.map((img,index) => <button type="button" key={`${img.src}-${index}`} className={selected === index ? 'selected' : ''} onClick={() => setSelected(index)} aria-label={`Mostrar imagem ${index+1}`}><img src={img.src} alt="" /></button>)}</div> : !showThumbs && <div className="gallery-dots">{images.map((_,index) => <button key={index} className={selected===index?'selected':''} onClick={()=>setSelected(index)} aria-label={`Ir para slide ${index + 1}`}/>)}</div>}
   </div>;
 }

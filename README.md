@@ -29,7 +29,7 @@ Organizei a aplicação em `src/components` (partes reutilizáveis), `src/pages`
 Com Node.js 20 ou superior instalado:
 
 ```bash
-npm install
+npm ci
 npm run dev
 ```
 
@@ -45,9 +45,9 @@ Os testes de navegador usam Playwright: Edge no Windows e Chromium no GitHub Act
 
 ## O que ficou fora do escopo
 
-Este repositório é a parte visual do trabalho. Os produtos são fictícios e as imagens vêm dos arquivos públicos da Digital College. O [Back-end](https://github.com/Edsmonteiro/digital-store-backend) foi feito em um projeto separado e ainda não alimenta esta loja.
+Este repositório é a parte visual do trabalho. O catálogo é demonstrativo. A galeria exibe uma única foto onde existe um recurso compatível. Os demais itens indicam que a imagem está indisponível. Os recursos oficiais estão em `public/store`. O [Back-end](https://github.com/Edsmonteiro/digital-store-backend) foi feito em um projeto separado e ainda não alimenta esta loja.
 
-O layout segue os exemplos e medidas fornecidos na atividade. A comparação detalhada com o arquivo original do Figma ainda depende de acesso ao design; por isso, não considero a fidelidade visual pixel a pixel totalmente verificada.
+Os diagramas oficiais servem para comparar a estrutura das três páginas. O acesso aos frames do Figma ainda é necessário para confirmar a arte e o texto do banner, as categorias com ícones, a tipografia e a composição visual dos estados mobile. As capturas responsivas dos testes ficam em `test-results/visual`.
 
 **Referências:** [requisitos oficiais](https://github.com/digitalcollegebr/projeto-digital-store) · [design no Figma](https://www.figma.com/design/nUk0ihM3x4u8JQtxUoAEJf/DRIP-STORE---DIGITAL-COLLEGE--Copy-?node-id=22-30&p=f)
 

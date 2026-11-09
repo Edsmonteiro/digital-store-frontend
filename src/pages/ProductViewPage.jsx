@@ -23,7 +23,8 @@ export default function ProductViewPage() {
   return <div className="container product-page">
     <Link className="back-link" to="/products"><ChevronLeft size={17}/> Voltar para produtos</Link>
     <div className="product-details-layout">
-      <Gallery key={product.id} images={product.images.map(src=>({src}))} showThumbs width={700} height={570} radius="4px" alt={product.name}/>
+      {product.images.length ? <Gallery key={product.id} images={product.images.map(src=>({src}))} showThumbs width={700} height={570} radius="4px" alt={product.name}/>
+        : <div className="product-gallery-unavailable image-unavailable">Imagem indisponível</div>}
       <BuyBox product={product} onBuy={()=>add(product,size,color)}>
         <ProductOptions label="Tamanho" options={product.sizes} value={size} onChange={setSize} shape="square" type="text" radius="4px" />
         <ProductOptions label="Cor" options={product.colors} value={color} onChange={setColor} shape="circle" type="color" />

@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import Logo from './Logo';
-const socials = 'https://raw.githubusercontent.com/digitalcollegebr/projeto-digital-store/main/assets/';
+const socials = '/store/';
 const groups = [
   { title: 'Informações', links: [{text:'Sobre a Drip Store',to:'/account'},{text:'Produtos',to:'/products'},{text:'Categorias',to:'/products?category=Calçados'}] },
   { title: 'Navegação', links: [{text:'Página inicial',to:'/'},{text:'Meus pedidos',to:'/orders'},{text:'Ver coleção',to:'/products'}] }

@@ -32,3 +32,14 @@ test('consulta item por id e recusa id inexistente', () => {
 test('a home possui 3 coleções', () => {
   assert.equal(getCollections().length, 3);
 });
+
+test('fotos do catálogo pertencem exclusivamente à galeria do item', () => {
+  const assigned = new Set();
+  for (const product of getProducts()) {
+    assert.deepEqual(product.images, product.image ? [product.image] : []);
+    for (const image of product.images) {
+      assert.ok(!assigned.has(image), image);
+      assigned.add(image);
+    }
+  }
+});
