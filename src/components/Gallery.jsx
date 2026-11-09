@@ -1,14 +1,15 @@
 import { useState, useEffect } from 'react';
 export default function Gallery({images, showThumbs = false, width, height, radius = '4px', alt = 'Produto', className = ''}) {
-  const [selected,setSelected] = useState(0);
+  const [requestedIndex, setSelected] = useState(0);
   useEffect(() => setSelected(0), [images?.[0]?.src]);
   if (!images?.length) return null;
-  const previous = () => setSelected((index) => Math.max(0,index-1));
+  const selected = Math.min(requestedIndex, images.length - 1);
+  const previous = () => setSelected((index) => Math.max(0, Math.min(index, images.length - 1) - 1));
   const next = () => setSelected((index) => Math.min(images.length-1,index+1));
   return <div className={`gallery ${showThumbs ? 'gallery-product' : 'gallery-banner'} ${className}`} style={{'--gallery-width': width ? `${width}px` : '100%', '--gallery-height': height ? `${height}px` : 'auto', '--gallery-radius': radius}}>
     <div className="gallery-stage">
       <div className="gallery-track" style={{transform: `translateX(-${selected * 100}%)`}}>
-        {images.map((image, index) => <img key={`${image.src}-${index}`} src={image.src} alt={`${alt}, imagem ${index + 1} de ${images.length}`} loading={index === 0 ? 'eager' : 'lazy'} />)}
+        {images.map((image, index) => <img key={`${image.src}-${index}`} src={image.src} alt={`${alt}, imagem ${index + 1} de ${images.length}`} aria-hidden={selected !== index} loading={index === 0 ? 'eager' : 'lazy'} />)}
       </div>
       <button type="button" className="gallery-prev" onClick={previous} disabled={selected === 0} aria-label="Imagem anterior"><img src="/store/arrow-left.svg" alt="" /></button>
       <button type="button" className="gallery-next" onClick={next} disabled={selected === images.length - 1} aria-label="Próxima imagem"><img src="/store/arrow-right.svg" alt="" /></button>

@@ -2,7 +2,7 @@ const cdn = '/store/';
 
 export const collections = [
   { title: 'Novo drop Supreme', tag: 'Camisetas', image: `${cdn}collection-1.png`, category: 'Roupas' },
-  { title: 'Coleção Adidas', tag: 'Calçados', image: `${cdn}collection-2.png`, category: 'Calçados' },
+  { title: 'Coleção Adidas', brand: 'Adidas', tag: 'Calçados', image: `${cdn}collection-2.png`, category: 'Calçados' },
   { title: 'Novo Beats Bass', tag: 'Acessórios', image: `${cdn}collection-3.png`, category: 'Acessórios' }
 ];
 

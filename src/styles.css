@@ -423,3 +423,12 @@ img { max-width: 100%; }
   .main-nav a { align-self: flex-start; }
   .mobile-account { width: 100%; border-top: 1px solid #f5f5f5; }
 }
+
+.gallery-thumbs { overflow-x: auto; padding: 4px; margin-inline: -4px; }
+.gallery-thumbs button { flex: 0 0 auto; }
+@media (min-width: 1081px) {
+  .header-top .search-form { max-width: 560px; height: 60px; }
+}
+@media (min-width: 761px) {
+  .buy-box .buy-button { max-width: 220px; height: 48px; }
+}

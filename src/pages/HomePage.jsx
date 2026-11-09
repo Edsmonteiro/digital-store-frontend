@@ -43,13 +43,17 @@ export default function HomePage() {
     <div className="container home-content">
       <Section title="Coleções em destaque" className="collections-section">
         <div className="collections-grid">
-          {collections.map(collection => (
-            <Link key={collection.title} to={`/products?category=${encodeURIComponent(collection.category)}`} className="collection-card">
-              <img src={collection.image} alt={collection.title} />
-              <span className="discount-tag">30% OFF</span>
-              <span className="collection-buy">Comprar</span>
-            </Link>
-          ))}
+          {collections.map(({ title, image, category, brand }) => {
+            const filters = brand ? { category, brand } : { category };
+            const available = getProducts(filters).length > 0;
+            return (
+              <Link key={title} to={`/products?${new URLSearchParams(filters)}`} className="collection-card">
+                <img src={image} alt={title} />
+                {available && <span className="discount-tag">30% OFF</span>}
+                <span className="collection-buy">{available ? 'Comprar' : 'Ver coleção'}</span>
+              </Link>
+            );
+          })}
         </div>
       </Section>
       <Section title="Coleções em destaque" titleAlign="center" className="category-section">

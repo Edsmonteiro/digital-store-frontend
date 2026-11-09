@@ -110,3 +110,56 @@ test('o carrossel da Home navega e desabilita as setas nas extremidades', async 
   await previous.click();
   await expect(next).toBeEnabled();
 });
+
+test('categorias e coleções da Home respeitam o estoque demonstrativo', async ({ page }) => {
+  const destinations = [
+    ['.category-icons', 'Camisetas', 'Roupas', '', 0],
+    ['.category-icons', 'Calças', 'Roupas', '', 0],
+    ['.category-icons', 'Bonés', 'Acessórios', '', 0],
+    ['.category-icons', 'Headphones', 'Acessórios', '', 0],
+    ['.category-icons', 'Tênis', 'Calçados', '', 10],
+    ['.collections-grid', /Novo drop Supreme/, 'Roupas', '', 0],
+    ['.collections-grid', /Coleção Adidas/, 'Calçados', 'Adidas', 0],
+    ['.collections-grid', /Novo Beats Bass/, 'Acessórios', '', 0]
+  ];
+
+  for (const [section, name, category, brand, count] of destinations) {
+    await page.goto('/');
+    await page.locator(section).getByRole('link', { name }).click();
+    await expect(page).toHaveURL(url =>
+      url.pathname === '/products' &&
+      url.searchParams.get('category') === category &&
+      (url.searchParams.get('brand') || '') === brand
+    );
+    await expect(page.locator('.catalog-results .product-card')).toHaveCount(count);
+    if (!count) {
+      await expect(page.getByRole('heading', { name: /Sem produtos em/ })).toBeVisible();
+      await page.getByRole('button', { name: 'Ver todos os produtos' }).click();
+      await expect(page.locator('.catalog-results .product-card')).toHaveCount(10);
+    }
+  }
+});
+
+test('galeria de detalhes sincroniza setas e miniaturas com várias imagens', async ({ page }) => {
+  // Vistas sintéticas isoladas para testar o componente sem alterar as fotos do catálogo.
+  await page.route('**/src/data/products.js*', async route => {
+    const response = await route.fetch();
+    const images = ['red', 'blue', 'green'].map(color =>
+      'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80"><circle cx="40" cy="40" r="35" fill="' + color + '"/></svg>')
+    );
+    await route.fulfill({ response, body: (await response.text()) + '\nproducts[0].images = ' + JSON.stringify(images) + ';' });
+  });
+  await page.goto('/product/1');
+  const gallery = page.locator('.gallery-product');
+  const previous = gallery.getByRole('button', { name: 'Imagem anterior' });
+  const next = gallery.getByRole('button', { name: 'Próxima imagem' });
+  await expect(previous).toBeDisabled();
+  await next.click();
+  await expect(gallery.getByRole('button', { name: 'Mostrar imagem 2' })).toHaveAttribute('aria-pressed', 'true');
+  await gallery.getByRole('button', { name: 'Mostrar imagem 3' }).click();
+  await expect(gallery.locator('.gallery-track')).toHaveAttribute('style', /translateX\(-200%\)/);
+  await expect(next).toBeDisabled();
+  await previous.click();
+  await expect(gallery.locator('.gallery-track')).toHaveAttribute('style', /translateX\(-100%\)/);
+  await expect(next).toBeEnabled();
+});
