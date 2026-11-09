@@ -19,7 +19,7 @@ export default function ProductListingPage() {
     setParams(next);
   }
   return <div className="container catalog-page">
-    <div className="page-heading"><p>Home / Produtos</p><h1>Encontre o seu próximo favorito</h1><span>Escolha entre os itens da nossa coleção.</span></div>
+    <div className="page-heading"><p>Home / Produtos</p><h1>Todos os produtos</h1><span>Use a busca ou os filtros para encontrar o que procura.</span></div>
     <div className="catalog-toolbar"><button className="mobile-filter-toggle" onClick={()=>setShowFilters(!showFilters)}><SlidersHorizontal size={19}/> Filtrar produtos</button></div>
     <div className="catalog-layout">
       <aside className={`catalog-sidebar ${showFilters?'visible':''}`}>
