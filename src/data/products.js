@@ -19,6 +19,19 @@ const data = [
   ['Boné Street', 'Acessórios', 'Converse', 'Unissex', 99.90, 79.90, 'produc-image-5.jpeg']
 ];
 
+const descriptions = [
+  'Tênis casual para usar com jeans, bermuda ou calça. Uma opção para quem prefere um visual mais básico.',
+  'Modelo com inspiração nos tênis de quadra, para combinar com roupas casuais.',
+  'Tênis com visual esportivo, que também funciona com looks do dia a dia.',
+  'Uma opção simples para quem gosta de tênis de lona e combinações mais descontraídas.',
+  'Tênis casual de linhas discretas, fácil de combinar com peças básicas.',
+  'Camiseta para quem gosta de roupas simples e de montar o próprio conjunto.',
+  'Camiseta de visual esportivo, para usar com short, calça ou bermuda.',
+  'Jaqueta para completar uma produção casual nos dias mais frescos.',
+  'Bolsa para levar os itens do dia a dia, sem abrir mão de um visual mais casual.',
+  'Boné para usar com camiseta, jaqueta ou o que mais combinar com você.'
+];
+
 export const products = data.map(([name, category, brand, gender, price, priceDiscount, image], index) => ({
   id: index + 1,
   name,
@@ -36,7 +49,7 @@ export const products = data.map(([name, category, brand, gender, price, priceDi
   reference: `DS-${String(index + 1).padStart(4, '0')}`,
   stars: Number((4.2 + (index % 6) * .1).toFixed(1)),
   rating: 42 + index * 11,
-  description: `${name} pensado para acompanhar sua rotina com conforto e personalidade. Uma escolha versátil para combinar com o que você já tem no guarda-roupa.`,
+  description: descriptions[index],
   sizes: category === 'Calçados' ? ['37', '38', '39', '40', '41', '42'] : category === 'Roupas' ? ['P', 'M', 'G', 'GG'] : ['Único'],
   colors: ['#262626', '#dad2c8', '#9e6489'],
   featured: index < 8
