@@ -46,7 +46,7 @@ export function CartProvider({ children }) {
     const order = {
       id: `TESTE-${Date.now()}`,
       createdAt: new Date().toISOString(),
-      status: 'Simulado no navegador',
+      status: 'Pedido de teste',
       items,
       total: Number(items.reduce((sum, item) => sum + item.price * item.quantity, 0).toFixed(2))
     };
@@ -54,7 +54,7 @@ export function CartProvider({ children }) {
       const previous = readStorage('drip-orders');
       localStorage.setItem('drip-orders', JSON.stringify([order, ...previous].slice(0, 20)));
       saveCart(() => []);
-      setMessage('Pedido de demonstração registrado neste navegador. Nenhuma compra foi realizada.');
+      setMessage('Pedido salvo neste navegador. É só um teste; nenhuma compra foi feita.');
     } catch {
       setMessage('Não foi possível salvar o pedido neste navegador.');
     }
