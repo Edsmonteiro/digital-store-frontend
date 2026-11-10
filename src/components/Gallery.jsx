@@ -10,7 +10,7 @@ export default function Gallery({images, showThumbs = false, width, height, radi
     <div className="gallery-stage">
       <div className="gallery-track" style={{transform: `translateX(-${selected * 100}%)`}}>
         {images.map((image, index) => hero
-          ? <div className="hero-slide" key={`${image.src}-${index}`} aria-hidden={selected !== index}>
+          ? <div className={`hero-slide hero-slide-${image.id || index}`} key={`${image.src}-${index}`} aria-hidden={selected !== index}>
               <img src={image.src} alt={index === 0 ? alt : ''} loading={index === 0 ? 'eager' : 'lazy'} draggable="false" />
             </div>
           : <img key={`${image.src}-${index}`} src={image.src} alt={`${alt}, imagem ${index + 1} de ${images.length}`} aria-hidden={selected !== index} loading={index === 0 ? 'eager' : 'lazy'} />)}

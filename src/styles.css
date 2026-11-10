@@ -521,3 +521,38 @@ img { max-width: 100%; }
   .hero::before { width: 92px; top: 5%; right: -15px; }
   .hero .gallery-dots { bottom: 22px; }
 }
+
+/* Cada recorte usa a mesma composição do banner principal. Nenhum deles
+   recebe fundo fotográfico ou contorno retangular. */
+.hero-slide-jordan > img {
+  width: min(54vw, 730px);
+  right: 9%;
+  top: 50%;
+  transform: translateY(-49%) rotate(-4deg);
+  filter: drop-shadow(0 14px 14px rgb(31 31 31 / 12%));
+}
+.hero-slide-blue > img {
+  width: min(43vw, 580px);
+  right: 15%;
+  top: 50%;
+  transform: translateY(-50%) rotate(8deg);
+  filter: drop-shadow(0 12px 12px rgb(31 31 31 / 12%));
+}
+@media (max-width: 1080px) and (min-width: 761px) {
+  .hero-slide-jordan > img { width: 56vw; right: 0%; }
+  .hero-slide-blue > img { width: 47vw; right: 8%; }
+}
+@media (max-width: 760px) {
+  .hero-slide-jordan > img {
+    width: min(118vw, 570px);
+    right: 50%;
+    top: 50%;
+    transform: translate(50%, -50%) rotate(-4deg);
+  }
+  .hero-slide-blue > img {
+    width: min(92vw, 440px);
+    right: 50%;
+    top: 50%;
+    transform: translate(50%, -50%) rotate(8deg);
+  }
+}

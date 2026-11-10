@@ -105,7 +105,7 @@ test('o carrossel da Home navega e desabilita as setas nas extremidades', async 
   await expect(previous).toBeDisabled();
   await next.click();
   await expect(gallery.locator('.gallery-track')).toHaveAttribute('style', /translateX\(-100%\)/);
-  await gallery.getByRole('button', { name: 'Ir para slide 4' }).click();
+  await gallery.getByRole('button', { name: 'Ir para slide 3' }).click();
   await expect(next).toBeDisabled();
   await previous.click();
   await expect(next).toBeEnabled();
@@ -172,5 +172,22 @@ test('banner inicial usa a arte recortada do Figma, sem foto retangular', async 
   await expect(hero.getByRole('heading', { name: /Queima de.*estoque Nike/i })).toBeVisible();
   await expect(hero.getByRole('link', { name: 'Ver Ofertas' })).toBeVisible();
   await expect.poll(() => shoe.evaluate(image => image.complete && image.naturalWidth > 0)).toBe(true);
-  await expect(hero.locator('.gallery-dots button')).toHaveCount(4);
+  await expect(hero.locator('.gallery-dots button')).toHaveCount(3);
+  await expect(hero.locator('.hero-slide img')).toHaveCount(3);
+  const sources = await hero.locator('.hero-slide img').evaluateAll(
+    images => images.map(image => image.getAttribute('src'))
+  );
+  expect(sources).toEqual([
+    '/store/nike-air-force-white-red.png',
+    '/store/home-slide-4-cutout.png',
+    '/store/home-slide-2-cutout.png'
+  ]);
+  expect(new Set(sources).size).toBe(3);
+  // Imagens fora do slide ativo podem carregar sob demanda.
+  // Avançamos o carrossel antes de conferir cada arquivo.
+  for (let index = 0; index < sources.length; index += 1) {
+    await hero.getByRole('button', { name: `Ir para slide ${index + 1}` }).click();
+    const image = hero.locator('.hero-slide img').nth(index);
+    await expect.poll(() => image.evaluate(node => node.complete && node.naturalWidth > 0)).toBe(true);
+  }
 });
