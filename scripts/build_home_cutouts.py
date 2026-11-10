@@ -9,7 +9,7 @@ from PIL import Image
 from rembg import new_session, remove
 
 ASSETS = Path(__file__).resolve().parents[1] / "public" / "store"
-SLIDES = (4, 6, 7)
+SLIDES = (2, 4, 6, 7)
 
 def main():
     session = new_session("u2netp")
@@ -17,6 +17,10 @@ def main():
         source = ASSETS / f"home-slide-{number}.jpeg"
         target = ASSETS / f"home-slide-{number}-cutout.png"
         image = Image.open(source).convert("RGBA")
+        if number == 2:
+            # A foto tem dois calçados; usamos somente o inferior, completo.
+            w, h = image.size
+            image = image.crop((int(w * 0.29), int(h * 0.36), int(w * 0.75), int(h * 0.99)))
         cutout = remove(image, session=session).convert("RGBA")
 
         # Descarta transparência residual que poderia formar uma borda cinza.
