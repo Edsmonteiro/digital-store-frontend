@@ -5,12 +5,11 @@ import Gallery from '../components/Gallery';
 import Section from '../components/Section';
 import ProductListing from '../components/ProductListing';
 
-// O primeiro banner reproduz a referência. As outras fotos foram
-// recortadas dos assets home-slide oficiais, mantendo o fundo transparente.
+// Mantemos somente as artes que funcionam no layout com fundo transparente.
+// O home-slide-2 foi retirado: seu recorte ficou incompleto no banner.
 const slides = [
   { src: '/store/nike-air-force-white-red.png', id: 'classic' },
-  { src: '/store/home-slide-4-cutout.png', id: 'jordan' },
-  { src: '/store/home-slide-2-cutout.png', id: 'blue' }
+  { src: '/store/home-slide-4-cutout.png', id: 'jordan' }
 ];
 
 const categories = [
