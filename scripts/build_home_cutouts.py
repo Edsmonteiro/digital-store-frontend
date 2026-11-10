@@ -9,7 +9,7 @@ from PIL import Image
 from rembg import new_session, remove
 
 ASSETS = Path(__file__).resolve().parents[1] / "public" / "store"
-SLIDES = (4, 7)
+SLIDES = (4, 6, 7)
 
 def main():
     session = new_session("u2netp")
