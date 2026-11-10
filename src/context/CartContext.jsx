@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 
 const CartContext = createContext(null);
 
@@ -16,16 +16,16 @@ export function CartProvider({ children }) {
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState('');
 
-  function saveCart(transform) {
-    setItems((current) => {
-      const next = transform(current);
-      localStorage.setItem('drip-cart', JSON.stringify(next));
-      return next;
-    });
-  }
+  useEffect(() => {
+    try {
+      localStorage.setItem('drip-cart', JSON.stringify(items));
+    } catch {
+      // O carrinho continua disponível em memória.
+    }
+  }, [items]);
 
   function add(product, size, color) {
-    saveCart((current) => {
+    setItems((current) => {
       const index = current.findIndex((item) => item.productId === product.id && item.size === size && item.color === color);
       if (index === -1) return [...current, {
         productId: product.id, name: product.name, image: product.image,
@@ -38,7 +38,7 @@ export function CartProvider({ children }) {
   }
 
   function remove(productId, size, color) {
-    saveCart((current) => current.filter((item) => !(item.productId === productId && item.size === size && item.color === color)));
+    setItems((current) => current.filter((item) => !(item.productId === productId && item.size === size && item.color === color)));
   }
 
   function checkout() {
@@ -53,7 +53,7 @@ export function CartProvider({ children }) {
     try {
       const previous = readStorage('drip-orders');
       localStorage.setItem('drip-orders', JSON.stringify([order, ...previous].slice(0, 20)));
-      saveCart(() => []);
+      setItems(() => []);
       setMessage('Pedido salvo neste navegador. É só um teste; nenhuma compra foi feita.');
     } catch {
       setMessage('Não foi possível salvar o pedido neste navegador.');

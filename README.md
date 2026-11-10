@@ -29,7 +29,7 @@ Organizei a aplicação em `src/components` (partes reutilizáveis), `src/pages`
 Com Node.js 20 ou superior instalado:
 
 ```bash
-npm install
+npm ci
 npm run dev
 ```
 
@@ -45,9 +45,9 @@ Os testes de navegador usam Playwright: Edge no Windows e Chromium no GitHub Act
 
 ## O que ficou fora do escopo
 
-Este repositório é a parte visual do trabalho. Os produtos são fictícios e as imagens vêm dos arquivos públicos da Digital College. O [Back-end](https://github.com/Edsmonteiro/digital-store-backend) foi feito em um projeto separado e ainda não alimenta esta loja.
+Este repositório é a parte visual do trabalho. O catálogo é demonstrativo. Os dez itens demonstrativos usam fotos oficiais distintas e descrições coerentes com o que aparece em cada foto. Cada item tem uma única foto confirmada. Camisetas, calças, bonés e headphones abrem suas categorias e mostram um estado sem estoque. A coleção Adidas também informa a indisponibilidade, pois nenhum calçado fotografado foi identificado como Adidas. Tênis abre os calçados disponíveis. Os recursos oficiais estão em `public/store`. O [Back-end](https://github.com/Edsmonteiro/digital-store-backend) foi feito em um projeto separado e ainda não alimenta esta loja.
 
-O layout segue os exemplos e medidas fornecidos na atividade. A comparação detalhada com o arquivo original do Figma ainda depende de acesso ao design; por isso, não considero a fidelidade visual pixel a pixel totalmente verificada.
+As capturas anexadas do Figma orientaram a revisão do banner, das grades e dos estados mobile. As comparações têm como referência imagens rasterizadas e não confirmam medidas e pesos tipográficos exatos. Os ícones de categoria são aproximações, e o rodapé não reproduz os dados de contato que não puderam ser confirmados. O banner, o catálogo e o detalhe usam fotos oficiais disponíveis. A arte recortada do tênis branco e vermelho, a foto do K-Swiss e as cinco vistas do produto da referência não estavam disponíveis como recursos independentes. As capturas responsivas dos testes ficam em `test-results/visual`.
 
 **Referências:** [requisitos oficiais](https://github.com/digitalcollegebr/projeto-digital-store) · [design no Figma](https://www.figma.com/design/nUk0ihM3x4u8JQtxUoAEJf/DRIP-STORE---DIGITAL-COLLEGE--Copy-?node-id=22-30&p=f)
 

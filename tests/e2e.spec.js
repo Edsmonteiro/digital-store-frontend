@@ -4,11 +4,10 @@ const screenshotPath = (name) => `docs/screenshots/${name}.png`;
 
 test('home mostra carrossel, três coleções e oito produtos', async ({ page }) => {
   await page.goto('/');
-  await expect(page.getByRole('heading', { name: 'Coleções em destaque' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Coleções em destaque' })).toHaveCount(2);
   await expect(page.getByRole('heading', { name: 'Produtos em alta' })).toBeVisible();
   await expect(page.locator('.collection-card')).toHaveCount(3);
   await expect(page.locator('.home-content .product-card')).toHaveCount(8);
-  await page.screenshot({ path: screenshotPath('home'), fullPage: true });
   await page.locator('.main-nav').getByRole('link', { name: 'Produtos', exact: true }).click();
   await expect(page).toHaveURL(/\/products$/);
   await page.getByRole('link', { name: /Tênis Street Move/ }).click();
@@ -27,32 +26,16 @@ test('pesquisa pela query string e filtros preservam a navegação', async ({ pa
   await expect(page).toHaveURL(/category=Cal%C3%A7ados/);
   await expect(page.getByRole('heading', { name: /produto encontrado/ })).toBeVisible();
   await expect(page.locator('.main-nav a.active')).toHaveText('Categorias');
-  await page.screenshot({ path: screenshotPath('products'), fullPage: true });
 });
 
 test('galeria, seleção de opções e compra demonstrativa funcionam', async ({ page }) => {
   await page.goto('/product/1');
-  // A galeria mantém todas as imagens na trilha e desliza via transform.
-  const track = page.locator('.gallery-product .gallery-track');
-  const images = track.locator('img');
-  await expect(images).toHaveCount(3);
-  const firstImage = await images.first().getAttribute('src');
-  expect(firstImage).toBeTruthy();
-  await expect(images.nth(1)).not.toHaveAttribute('src', firstImage);
-  await expect(track).toHaveAttribute('style', /translateX\(-?0%\)/);
+  const images = page.locator('.gallery-product .gallery-track img');
+  await expect(images).toHaveCount(1);
+  await expect(images.first()).toHaveAttribute('src', '/store/product-thumb-1.jpeg');
   await expect(page.getByRole('button', { name: 'Imagem anterior' })).toBeDisabled();
-
-  await page.getByRole('button', { name: 'Próxima imagem' }).click();
-  await expect(track).toHaveAttribute('style', /translateX\(-100%\)/);
-  await page.getByRole('button', { name: 'Próxima imagem' }).click();
-  await expect(track).toHaveAttribute('style', /translateX\(-200%\)/);
   await expect(page.getByRole('button', { name: 'Próxima imagem' })).toBeDisabled();
-
-  await page.getByRole('button', { name: 'Imagem anterior' }).click();
-  await expect(track).toHaveAttribute('style', /translateX\(-100%\)/);
-  await page.getByRole('button', { name: 'Mostrar imagem 1' }).click();
-  await expect(track).toHaveAttribute('style', /translateX\(-?0%\)/);
-  await expect(page.getByRole('button', { name: 'Mostrar imagem 1' })).toHaveClass(/selected/);
+  await expect(page.getByRole('button', { name: 'Mostrar imagem 1' })).toHaveAttribute('aria-pressed', 'true');
   await page.getByRole('button', { name: 'Selecionar tamanho 40' }).click();
   await page.getByRole('button', { name: 'Selecionar cor #dad2c8' }).click();
   await expect(page.getByRole('button', { name: 'Selecionar tamanho 40' })).toHaveAttribute('aria-pressed', 'true');
@@ -61,7 +44,6 @@ test('galeria, seleção de opções e compra demonstrativa funcionam', async ({
   await expect(page.getByRole('heading', { name: 'Meu carrinho' })).toBeVisible();
   await expect(page.getByRole('dialog').getByText('Tênis Street Move')).toBeVisible();
   await page.getByRole('button', { name: 'Fechar carrinho' }).click();
-  await page.screenshot({ path: screenshotPath('product-view'), fullPage: true });
 });
 
 test('imagens carregam e não há erros de console nas três páginas', async ({ page }) => {
@@ -85,7 +67,99 @@ test('as três páginas não criam rolagem horizontal nos seis tamanhos solicita
       await page.goto(route);
       await expect(page.locator('#conteudo')).toBeVisible();
       const dimensions = await page.evaluate(() => ({ viewport: window.innerWidth, document: document.documentElement.scrollWidth }));
+      await page.evaluate(() => document.fonts.ready);
+      const name = route === '/' ? 'home' : route === '/products' ? 'products' : 'product-view';
+      await page.screenshot({ path: `test-results/visual/${width}/${name}.png`, fullPage: true });
+      if (width === 1440) await page.screenshot({ path: screenshotPath(name), fullPage: true });
       expect(dimensions.document, `Rolagem horizontal em ${route}, viewport ${width}px`).toBeLessThanOrEqual(dimensions.viewport);
     }
   }
+});
+
+test('menu, busca e filtros mobile', async ({ page }) => {
+  await page.setViewportSize({ width: 375, height: 812 });
+  await page.goto('/');
+  await page.getByRole('button', { name: 'Abrir menu' }).click();
+  await expect(page.locator('.main-nav .active')).toHaveText('Home');
+  await page.screenshot({ path: 'test-results/visual/375/menu.png' });
+  expect(await page.evaluate(() => document.body.style.overflow)).toBe('hidden');
+  await page.keyboard.press('Escape');
+  await expect(page.locator('.main-nav')).toBeHidden();
+  await page.getByRole('button', { name: 'Alternar busca' }).click();
+  await page.screenshot({ path: 'test-results/visual/375/busca.png' });
+  await page.getByLabel('Buscar produtos').fill('street');
+  await page.getByRole('button', { name: 'Pesquisar', exact: true }).click();
+  await expect(page).toHaveURL(/filter=street/);
+  await page.getByRole('button', { name: 'Filtrar produtos' }).click();
+  await expect(page.getByRole('heading', { name: 'Filtrar por' })).toBeVisible();
+  await page.screenshot({ path: 'test-results/visual/375/filtros.png' });
+  await page.getByRole('button', { name: 'Fechar filtros', exact: true }).click();
+  await expect(page.getByRole('heading', { name: 'Filtrar por' })).toBeHidden();
+});
+
+test('o carrossel da Home navega e desabilita as setas nas extremidades', async ({ page }) => {
+  await page.goto('/');
+  const gallery = page.locator('.gallery-banner');
+  const previous = gallery.getByRole('button', { name: 'Imagem anterior' });
+  const next = gallery.getByRole('button', { name: 'Próxima imagem' });
+  await expect(previous).toBeDisabled();
+  await next.click();
+  await expect(gallery.locator('.gallery-track')).toHaveAttribute('style', /translateX\(-100%\)/);
+  await gallery.getByRole('button', { name: 'Ir para slide 4' }).click();
+  await expect(next).toBeDisabled();
+  await previous.click();
+  await expect(next).toBeEnabled();
+});
+
+test('categorias e coleções da Home respeitam o estoque demonstrativo', async ({ page }) => {
+  const destinations = [
+    ['.category-icons', 'Camisetas', 'Roupas', '', 0],
+    ['.category-icons', 'Calças', 'Roupas', '', 0],
+    ['.category-icons', 'Bonés', 'Acessórios', '', 0],
+    ['.category-icons', 'Headphones', 'Acessórios', '', 0],
+    ['.category-icons', 'Tênis', 'Calçados', '', 10],
+    ['.collections-grid', /Novo drop Supreme/, 'Roupas', '', 0],
+    ['.collections-grid', /Coleção Adidas/, 'Calçados', 'Adidas', 0],
+    ['.collections-grid', /Novo Beats Bass/, 'Acessórios', '', 0]
+  ];
+
+  for (const [section, name, category, brand, count] of destinations) {
+    await page.goto('/');
+    await page.locator(section).getByRole('link', { name }).click();
+    await expect(page).toHaveURL(url =>
+      url.pathname === '/products' &&
+      url.searchParams.get('category') === category &&
+      (url.searchParams.get('brand') || '') === brand
+    );
+    await expect(page.locator('.catalog-results .product-card')).toHaveCount(count);
+    if (!count) {
+      await expect(page.getByRole('heading', { name: /Sem produtos em/ })).toBeVisible();
+      await page.getByRole('button', { name: 'Ver todos os produtos' }).click();
+      await expect(page.locator('.catalog-results .product-card')).toHaveCount(10);
+    }
+  }
+});
+
+test('galeria de detalhes sincroniza setas e miniaturas com várias imagens', async ({ page }) => {
+  // Vistas sintéticas isoladas para testar o componente sem alterar as fotos do catálogo.
+  await page.route('**/src/data/products.js*', async route => {
+    const response = await route.fetch();
+    const images = ['red', 'blue', 'green'].map(color =>
+      'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80"><circle cx="40" cy="40" r="35" fill="' + color + '"/></svg>')
+    );
+    await route.fulfill({ response, body: (await response.text()) + '\nproducts[0].images = ' + JSON.stringify(images) + ';' });
+  });
+  await page.goto('/product/1');
+  const gallery = page.locator('.gallery-product');
+  const previous = gallery.getByRole('button', { name: 'Imagem anterior' });
+  const next = gallery.getByRole('button', { name: 'Próxima imagem' });
+  await expect(previous).toBeDisabled();
+  await next.click();
+  await expect(gallery.getByRole('button', { name: 'Mostrar imagem 2' })).toHaveAttribute('aria-pressed', 'true');
+  await gallery.getByRole('button', { name: 'Mostrar imagem 3' }).click();
+  await expect(gallery.locator('.gallery-track')).toHaveAttribute('style', /translateX\(-200%\)/);
+  await expect(next).toBeDisabled();
+  await previous.click();
+  await expect(gallery.locator('.gallery-track')).toHaveAttribute('style', /translateX\(-100%\)/);
+  await expect(next).toBeEnabled();
 });

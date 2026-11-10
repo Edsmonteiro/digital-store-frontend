@@ -9,7 +9,7 @@ export default function CartDrawer() {
     <aside className="cart-drawer" role="dialog" aria-modal="true" aria-label="Meu carrinho">
       <div className="drawer-header"><h2>Meu carrinho</h2><button aria-label="Fechar carrinho" onClick={() => setOpen(false)}><X /></button></div>
       {items.length ? <div className="cart-items">{items.map(item=><div className="cart-item" key={`${item.productId}-${item.size}-${item.color}`}>
-        <img src={item.image} alt="" /><div><strong>{item.name}</strong><small>Tam. {item.size} · Qtd. {item.quantity}</small><span>{money(item.price * item.quantity)}</span></div>
+        {item.image && <img src={item.image} alt="" />}<div><strong>{item.name}</strong><small>Tam. {item.size} · Qtd. {item.quantity}</small><span>{money(item.price * item.quantity)}</span></div>
         <button aria-label={`Remover ${item.name}`} onClick={()=>remove(item.productId,item.size,item.color)}><Trash2 size={17}/></button>
       </div>)}</div> : <div className="empty-cart"><ShoppingBag size={44}/><p>Seu carrinho está vazio.</p><Link to="/products" onClick={()=>setOpen(false)}>Ver produtos</Link></div>}
       <div className="drawer-footer">{message && <p className="cart-message" role="status">{message}</p>}{items.length > 0 && <><div className="cart-total"><span>Total</span><strong>{money(total)}</strong></div><button className="buy-button" disabled={busy} onClick={checkout}>{busy?'Registrando...':'Salvar pedido de teste'}</button></>}</div>

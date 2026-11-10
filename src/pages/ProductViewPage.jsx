@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ChevronLeft } from 'lucide-react';
 import Gallery from '../components/Gallery';
 import BuyBox from '../components/BuyBox';
 import ProductOptions from '../components/ProductOptions';
@@ -21,9 +20,10 @@ export default function ProductViewPage() {
   const setColor = (value) => setSelections((current) => ({...current, [id]: {...current[id], color: value}}));
   if (!product) return <div className="container not-found"><h1>Produto não encontrado</h1><p>Este item não está disponível no catálogo.</p><Link to="/products">Voltar para produtos</Link></div>;
   return <div className="container product-page">
-    <Link className="back-link" to="/products"><ChevronLeft size={17}/> Voltar para produtos</Link>
+    <p className="product-crumb"><Link to="/">Home</Link> / <Link to="/products">Produtos</Link> / {product.category} / {product.name}</p>
     <div className="product-details-layout">
-      <Gallery key={product.id} images={product.images.map(src=>({src}))} showThumbs width={700} height={570} radius="4px" alt={product.name}/>
+      {product.images.length ? <Gallery key={product.id} images={product.images.map(src=>({src}))} showThumbs width={700} height={570} radius="4px" alt={product.name}/>
+        : <div className="product-gallery-unavailable image-unavailable">Imagem indisponível</div>}
       <BuyBox product={product} onBuy={()=>add(product,size,color)}>
         <ProductOptions label="Tamanho" options={product.sizes} value={size} onChange={setSize} shape="square" type="text" radius="4px" />
         <ProductOptions label="Cor" options={product.colors} value={color} onChange={setColor} shape="circle" type="color" />
