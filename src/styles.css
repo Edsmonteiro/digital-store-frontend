@@ -432,3 +432,92 @@ img { max-width: 100%; }
 @media (min-width: 761px) {
   .buy-box .buy-button { max-width: 220px; height: 48px; }
 }
+
+/* Banner: composição do frame original. O PNG tem fundo transparente;
+   o tênis e o texto ficam sobre a mesma superfície, sem cartão fotográfico. */
+.hero { background: #f5f5f5; }
+.hero .gallery-stage { background: transparent; }
+.hero .gallery-track > .hero-slide {
+  position: relative;
+  flex: 0 0 100%;
+  min-width: 0;
+  height: 100%;
+  overflow: hidden;
+}
+.hero-slide > img {
+  position: absolute;
+  width: min(56vw, 780px);
+  max-width: none;
+  height: auto;
+  top: 50%;
+  right: 8%;
+  object-fit: contain;
+  transform: translateY(-52%) rotate(-14deg);
+  pointer-events: none;
+  user-select: none;
+}
+.hero-copy {
+  width: min(1190px, calc(100% - 48px));
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  z-index: 3;
+  pointer-events: none;
+}
+.hero-copy > div { max-width: 460px; }
+.hero-copy h1 {
+  font-size: clamp(40px, 4vw, 58px);
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+  margin: 14px 0 17px;
+}
+.hero-kicker { font-size: 15px; }
+.hero-description { max-width: 410px; font-size: 15px; line-height: 1.7; }
+.hero::before {
+  top: 12%;
+  right: 5%;
+  z-index: 2;
+  width: 140px;
+  background: radial-gradient(circle, #f6aa1c 1px, transparent 1.5px) 0 0 / 10px 10px;
+  clip-path: circle(49%);
+}
+.hero .gallery-dots { bottom: 34px; z-index: 5; }
+.hero .gallery-dots button,
+.hero .gallery-dots button.selected { width: 10px; height: 10px; border-radius: 50%; }
+.hero .gallery-stage > button {
+  background: rgb(255 255 255 / 70%);
+  box-shadow: none;
+  opacity: 0;
+}
+.hero:hover .gallery-stage > button:not(:disabled),
+.hero:focus-within .gallery-stage > button:not(:disabled) { opacity: 0.85; }
+
+@media (max-width: 1080px) and (min-width: 761px) {
+  .hero-slide > img { width: 63vw; right: 0; }
+  .hero-copy > div { max-width: 42%; }
+  .hero-copy h1 { font-size: clamp(36px, 4.2vw, 46px); }
+}
+
+@media (max-width: 760px) {
+  .hero .gallery-stage { height: auto; aspect-ratio: 1.35; }
+  .hero-slide > img {
+    width: min(105vw, 500px);
+    top: 50%;
+    right: 50%;
+    transform: translate(50%, -50%) rotate(-14deg);
+  }
+  .hero-copy {
+    position: static;
+    display: block;
+    width: min(100% - 32px, 540px);
+    padding: 0 0 60px;
+    text-align: center;
+  }
+  .hero-copy > div { max-width: none; }
+  .hero-copy h1 { font-size: clamp(29px, 8vw, 36px); margin: 10px 0 14px; }
+  .hero-kicker { font-size: 13px; color: var(--primary); }
+  .hero-description { font-size: 13px; line-height: 1.55; margin: 0 auto 20px; }
+  .hero::before { width: 92px; top: 5%; right: -15px; }
+  .hero .gallery-dots { bottom: 22px; }
+}

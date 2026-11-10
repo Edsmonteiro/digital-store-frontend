@@ -52,3 +52,5 @@ As capturas anexadas do Figma orientaram a revisão do banner, das grades e dos 
 **Referências:** [requisitos oficiais](https://github.com/digitalcollegebr/projeto-digital-store) · [design no Figma](https://www.figma.com/design/nUk0ihM3x4u8JQtxUoAEJf/DRIP-STORE---DIGITAL-COLLEGE--Copy-?node-id=22-30&p=f)
 
 Prazo da atividade: 20/11/2026.
+
+**Crédito do banner:** recorte `White-Sneakers-PNG-Clipart.png`, de [PNG All](https://www.pngall.com/sneakers-png/), usado como recurso visual no exercício acadêmico sem finalidade comercial.

@@ -5,8 +5,13 @@ import Gallery from '../components/Gallery';
 import Section from '../components/Section';
 import ProductListing from '../components/ProductListing';
 
-const slides = ['produc-image-5.jpeg', 'product-thumb-2.jpeg', 'product-thumb-5.jpeg', 'produc-image-1.jpeg']
-  .map(file => ({ src: `/store/${file}` }));
+// A arte do tênis é o mesmo recorte usado no banner do design de referência.
+// Mantemos os quatro estados do carrossel sem trocar o produto por fotos incompatíveis.
+const bannerImage = '/store/nike-air-force-white-red.png';
+const slides = Array.from({ length: 4 }, (_, index) => ({
+  src: bannerImage,
+  id: index
+}));
 
 const categories = [
   ['Camisetas', 'Roupas', Shirt],
@@ -30,7 +35,7 @@ export default function HomePage() {
   const collections = getCollections();
   return <>
     <div className="hero">
-      <Gallery images={slides} width={1440} height={681} alt="Tênis em oferta" />
+      <Gallery images={slides} width={1440} height={681} alt="Tênis Nike branco e vermelho" hero />
       <div className="container hero-copy">
         <div>
           <p className="hero-kicker">Melhores ofertas personalizadas</p>

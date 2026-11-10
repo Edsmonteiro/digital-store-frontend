@@ -163,3 +163,14 @@ test('galeria de detalhes sincroniza setas e miniaturas com várias imagens', as
   await expect(gallery.locator('.gallery-track')).toHaveAttribute('style', /translateX\(-100%\)/);
   await expect(next).toBeEnabled();
 });
+
+test('banner inicial usa a arte recortada do Figma, sem foto retangular', async ({ page }) => {
+  await page.goto('/');
+  const hero = page.locator('.hero');
+  const shoe = hero.locator('.hero-slide img').first();
+  await expect(shoe).toHaveAttribute('src', '/store/nike-air-force-white-red.png');
+  await expect(hero.getByRole('heading', { name: /Queima de.*estoque Nike/i })).toBeVisible();
+  await expect(hero.getByRole('link', { name: 'Ver Ofertas' })).toBeVisible();
+  await expect.poll(() => shoe.evaluate(image => image.complete && image.naturalWidth > 0)).toBe(true);
+  await expect(hero.locator('.gallery-dots button')).toHaveCount(4);
+});
