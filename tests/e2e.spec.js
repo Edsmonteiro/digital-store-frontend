@@ -172,5 +172,19 @@ test('banner inicial usa a arte recortada do Figma, sem foto retangular', async 
   await expect(hero.getByRole('heading', { name: /Queima de.*estoque Nike/i })).toBeVisible();
   await expect(hero.getByRole('link', { name: 'Ver Ofertas' })).toBeVisible();
   await expect.poll(() => shoe.evaluate(image => image.complete && image.naturalWidth > 0)).toBe(true);
-  await expect(hero.locator('.gallery-dots button')).toHaveCount(4);
+  await expect(hero.locator('.gallery-dots button')).toHaveCount(3);
+  await expect(hero.locator('.hero-slide img')).toHaveCount(3);
+  const sources = await hero.locator('.hero-slide img').evaluateAll(
+    images => images.map(image => image.getAttribute('src'))
+  );
+  expect(sources).toEqual([
+    '/store/nike-air-force-white-red.png',
+    '/store/home-slide-4-cutout.png',
+    '/store/home-slide-2-cutout.png'
+  ]);
+  expect(new Set(sources).size).toBe(3);
+  const cutouts = await hero.locator('.hero-slide img').evaluateAll(
+    images => images.map(image => image.complete && image.naturalWidth > 0)
+  );
+  expect(cutouts).toEqual([true, true, true]);
 });
